@@ -167,5 +167,6 @@ REDIRECT_URL = 'blog:home'
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('FACEBOOK_APP_ID')
-django_heroku.settings(locals())
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('FACEBOOK_APP_SECRET')
 
+django_heroku.settings(locals())
