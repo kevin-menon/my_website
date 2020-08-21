@@ -6,6 +6,8 @@ Pillow
 django-crispy-forms
 gunicorn
 django-heroku #configured for django 2.0, may be useless for django 3.0?
+social-auth-app-django
+"social-auth-core[openidconnect]"
 
 apt packages:
 

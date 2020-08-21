@@ -45,6 +45,7 @@ urlpatterns = [
              template_name='users/password_reset_complete.html'
          ),
          name='password_reset_complete'),
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('', include('blog.urls')),
 ]
 
