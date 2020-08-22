@@ -49,6 +49,15 @@ urlpatterns = [
     path('', include('blog.urls')),
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
 
 if settings.DEBUG:
+    import debug_toolbar
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+    print(settings.DEBUG)
