@@ -21,6 +21,7 @@ Welcome to my project! This is just something for fun, no specific goal except l
 - django-heroku #configured for django 2.0, may be useless for django 3.0?
 - social-auth-app-django
 - "social-auth-core[openidconnect]"
+- django-allauth
 
 ### development
 - django-sslserver
@@ -58,6 +59,7 @@ Welcome to my project! This is just something for fun, no specific goal except l
 - least things on screen possible or very colorful site?
 - avatars : https://django-avatar.readthedocs.io/en/latest/
 - django-friendship : followers, accepts, reject
+- easily save drafts, mention someone in article
 
 ## technical features
 

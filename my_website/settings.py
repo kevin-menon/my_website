@@ -18,7 +18,6 @@ import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -38,15 +37,21 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
-    'social_django',
     'sslserver',
+    'debug_toolbar',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.openid',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -120,10 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Authentication and permissions
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
+    'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -151,8 +153,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
 
 # Email definition
@@ -164,26 +164,33 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
-# Social auth settings
+# Django-allauth definitions
 
-LOGIN_URL = 'login-url'
-REDIRECT_URL = 'blog:home'
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIALACCOUNT_PROVIDERS = {
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('FACEBOOK_APP_ID')
-SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('FACEBOOK_APP_SECRET')
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_API_VERSION = '8.0'
+    'facebook': {
+        'METHOD': 'js_sdk',
+        # 'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+        # 'SCOPE': ['email', 'public_profile'],
+        # 'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        # 'INIT_PARAMS': {'cookie': True},
+        # 'FIELDS': [
+        #     'id',
+        #     'first_name',
+        #     'last_name',
+        #     'middle_name',
+        #     'name',
+        #     'name_format',
+        #     'picture',
+        #     'short_name'
+        # ],
+        # 'EXCHANGE_TOKEN': True,
+        # 'LOCALE_FUNC': 'path.to.callable',
+        # 'VERIFIED_EMAIL': False,
+        'VERSION': 'v8.0',
+    }
+}
+
+SITE_ID = 1
 
 django_heroku.settings(locals())
-
-SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.user.create_user',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',)
